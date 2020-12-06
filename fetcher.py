@@ -36,6 +36,20 @@ def text2dirname(text):
     return result
 
 
+def setup_local_workspace(netloc, article_title):
+    "Setup the local environment. For example local storage."
+    global FETCHER_DIR, NETLOC_DIR, ARTICLE_DIR, ARTICLE_IMAGES_DIR
+    home_dir = os.getenv('HOME')
+    article_title_as_dirname = text2dirname(article_title)
+
+    FETCHER_DIR = os.path.join(home_dir, ".fetcher")
+    NETLOC_DIR = os.path.join(FETCHER_DIR, netloc)
+    ARTICLE_DIR = os.path.join(NETLOC_DIR, article_title_as_dirname)
+    ARTICLE_IMAGES_DIR = os.path.join(ARTICLE_DIR, "images")
+
+    mkdirs(ARTICLE_IMAGES_DIR)
+
+
 def validate_url(url):
     "Check if URL is valid."
     parsed_url = urlparse(url)
