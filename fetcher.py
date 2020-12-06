@@ -21,6 +21,15 @@ def mkdirs(path):
             raise
 
 
+def text2dirname(text):
+    """
+    Replaces whitespaces of a text with underscores. No whitespace in paths
+    is the goal.
+    """
+    result = re.sub(r"\s+", '_', text)
+    return result
+
+
 def validate_url(url):
     "Check if URL is valid."
     parsed_url = urlparse(url)
