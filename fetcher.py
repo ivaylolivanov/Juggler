@@ -135,7 +135,11 @@ if __name__ == "__main__":
     response = requests.get(target_url)
 
     if not response.ok:
-        print("\n\n\nERROR: Status code: {}!\n\n\n".format(status))
+        print(
+            "\n\n\nERROR: Status code: {}!\n\n\n".format(
+                response.status_code
+            )
+        )
         sys.exit(2)
 
     content = response.text
