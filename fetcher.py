@@ -147,6 +147,7 @@ if __name__ == "__main__":
     content_parsed = remove_footer(content_parsed)
     title = content_parsed.title.string
     print(title)
+    setup_local_workspace(get_url_netloc(target_url), title)
 
     articles = content_parsed.find_all('article')
     paragraphs = content_parsed.find_all('p')
