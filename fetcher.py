@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
+import os
+import re
 import sys
+import errno
 import requests
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
