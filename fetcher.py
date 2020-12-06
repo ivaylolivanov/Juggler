@@ -9,6 +9,18 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 
+def mkdirs(path):
+    """
+    Creating the given path if does not exist using the EAFP method.
+    EAFP = Easier to ask for forgiveness than permission.
+    """
+    try:
+        os.makedirs(path)
+    except OSError as err:
+        if err.errno != errno.EEXIST:
+            raise
+
+
 def validate_url(url):
     "Check if URL is valid."
     parsed_url = urlparse(url)
