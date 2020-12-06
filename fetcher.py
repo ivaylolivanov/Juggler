@@ -9,6 +9,12 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 
+FETCHER_DIR = ""
+NETLOC_DIR = ""
+ARTICLE_DIR = ""
+ARTICLE_IMAGES_DIR = ""
+
+
 def mkdirs(path):
     """
     Creating the given path if does not exist using the EAFP method.
