@@ -184,6 +184,8 @@ if __name__ == "__main__":
         for img in data_tag.find_all('img'):
             img_original_src = img.get('src')
             img_src = img_original_src
+            if not img_src:
+                continue
             if not validate_url(img_src):
                 img_src = ''.join([
                     get_url_scheme(target_url),
