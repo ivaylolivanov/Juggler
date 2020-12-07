@@ -161,30 +161,51 @@ if __name__ == "__main__":
     content_parsed = BeautifulSoup(content, "html.parser")
     content_parsed = remove_footer(content_parsed)
     title = content_parsed.title.string
-    print(title)
     setup_local_workspace(get_url_netloc(target_url), title)
 
-    articles = content_parsed.find_all('article')
-    paragraphs = content_parsed.find_all('p')
-    if articles:
-        for article in articles:
-            if(is_tag_visible(article)):
-                print(article.prettify())
-    else:
-        for p in paragraphs:
-            if(is_tag_visible(p)):
-                print(p.prettify())
+    fetched_content = title
+    meaningful_data = content_parsed.find_all('article')
+    meaningful_data += content_parsed.find_all('section')
+    if not meaningful_data:
+        meaningful_data = content_parsed.find_all('p')
+    if not meaningful_data:
+        print(
+            "\n\n\nERROR: Failed to find either of tags {}!\n\n\n".format(
+                "[article, p, sectoin] in that order"
+            )
+        )
+        sys.exit(3)
 
-    for img in content_parsed.find_all('img'):
-        img_src = img.get('src')
-        if not validate_url(img_src):
-            img_src = ''.join([
-                get_url_scheme(target_url),
-                "://",
-                get_url_netloc(target_url),
-                img_src
-            ])
-        if not validate_url(img_src):
-            next
-        download_img(img_src, "./test.jpg")
-        break
+    for data_tag in meaningful_data:
+        if not is_tag_visible(data_tag):
+            continue
+
+        tag_as_html = data_tag.prettify()
+        for img in data_tag.find_all('img'):
+            img_original_src = img.get('src')
+            img_src = img_original_src
+            if not validate_url(img_src):
+                img_src = ''.join([
+                    get_url_scheme(target_url),
+                    "://",
+                    get_url_netloc(target_url),
+                    img_src
+                ])
+
+            if not validate_url(img_src):
+                continue
+
+            img_basename = os.path.basename(get_url_path(img_src))
+            img_local_storage_path = os.path.join(
+                ARTICLE_IMAGES_DIR, img_basename)
+            download_img(img_src, img_local_storage_path)
+            tag_as_html = re.sub(r"{}".format(img_original_src),
+                                 img_local_storage_path, tag_as_html)
+
+        fetched_content = ''.join([
+            fetched_content,
+            "\n",
+            tag_as_html
+        ])
+
+    save_article(fetched_content)
