@@ -164,10 +164,21 @@ if __name__ == "__main__":
     setup_local_workspace(get_url_netloc(target_url), title)
 
     fetched_content = title
-    meaningful_data = content_parsed.find_all('article')
-    meaningful_data += content_parsed.find_all('section')
-    if not meaningful_data:
-        meaningful_data = content_parsed.find_all('p')
+    meaningful_data = content_parsed.find_all(['article', 'section'])
+    all_paragraphs_and_headers = content_parsed.find_all(
+        ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
+    )
+
+    paragraphs_and_headers_to_add = []
+    for tag in meaningful_data:
+        paragraphs = tag.find_all('p')
+        for item in all_paragraphs_and_headers:
+            if(item not in paragraphs
+               and item not in paragraphs_and_headers_to_add):
+                paragraphs_and_headers_to_add.append(item)
+
+    meaningful_data += paragraphs_and_headers_to_add
+
     if not meaningful_data:
         print(
             "\n\n\nERROR: Failed to find either of tags {}!\n\n\n".format(
