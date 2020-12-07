@@ -71,6 +71,12 @@ def get_url_netloc(url):
     return parsed_url.netloc
 
 
+def get_url_path(url):
+    "Extract the path out of a URL."
+    parsed_url = urlparse(url)
+    return parsed_url.path
+
+
 def evaluate_cmd():
     """
     Evaluate the command line arguments or exit with help printed if none
