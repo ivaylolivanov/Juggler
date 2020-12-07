@@ -50,6 +50,15 @@ def setup_local_workspace(netloc, article_title):
     mkdirs(ARTICLE_IMAGES_DIR)
 
 
+def save_article(article_content):
+    "Stores the article as html document in ARTICLE_DIR location"
+    if not article_content:
+        print("\n\n\nERROR: No content to save!\n\n\n")
+        sys.exit(4)
+    with open(os.path.join(ARTICLE_DIR, "article.html"), 'w') as article_file:
+        article_file.write(article_content)
+
+
 def validate_url(url):
     "Check if URL is valid."
     parsed_url = urlparse(url)
