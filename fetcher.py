@@ -132,7 +132,10 @@ def remove_footer(content):
     if not footer:
         footer = content.find('div', class_='footer')
 
-    footer.decompose()
+    if not footer:
+        footer = ""
+    else:
+        footer.decompose()
 
     return content
 
