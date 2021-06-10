@@ -172,6 +172,9 @@ if __name__ == "__main__":
         ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
     )
 
+    if len(meaningful_data) <= 0:
+        meaningful_data = all_paragraphs_and_headers
+
     paragraphs_and_headers_to_add = []
     for tag in meaningful_data:
         paragraphs = tag.find_all('p')
