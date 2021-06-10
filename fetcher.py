@@ -185,7 +185,7 @@ if __name__ == "__main__":
     if not meaningful_data:
         print(
             "\n\n\nERROR: Failed to find either of tags {}!\n\n\n".format(
-                "[article, p, sectoin] in that order"
+                "[article, p, section] in that order"
             )
         )
         sys.exit(3)
