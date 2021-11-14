@@ -14,3 +14,10 @@ off of a given list of websites, RSS feeds or e-mails and given single URL.
 - requests
 - urllib
 - BeautifulSoup
+
+## To Do
+- Store articles in Database
+- Search for keywords in the article
+- Store the keywords in the database with the article
+- Create audio book from the article
+- Automatically downloads new articles in given URLs
